@@ -1,0 +1,85 @@
+---
+title: "Super Bowl 55 Predictions"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+team_scores <- read_csv("spreadspoke_scores.csv")
+team_scores
+```
+```{r}
+filtered_by_team <- filter(team_scores, team_home == "Tampa Bay Buccaneers"| team_home == "Kansas City Chiefs" | team_away == "Kansas City Chiefs" | team_away == " Tampa Bay Buccaneers")
+
+finalDF <- filter(filtered_by_team, schedule_season == 2020)
+
+finalDF
+```
+
+```{r}
+
+home <- filter(finalDF, team_home == "Tampa Bay Buccaneers" | team_home == "Kansas City Chiefs")
+home
+score <- ggplot(home)+
+  geom_boxplot(aes(x = team_home, y = score_home, 
+                   fill = team_home))+
+  coord_flip()+
+  labs(x = "Score", y="Teams", title = "Points at Home")+
+  scale_y_continuous()+
+  theme(legend.position = "none")
+score
+```
+
+```{r}
+away <- filter(finalDF, team_away == "Tampa Bay Buccaneers" | team_away == "Kansas City Chiefs")
+
+ggplot(away)+
+  geom_boxplot(aes(x = team_away, y = score_away, fill = team_away))+
+  coord_flip()+
+  labs(x = "Score", y="Teams", title = "Kansas City Chiefs Away Points")+
+  scale_y_continuous()+
+  theme(legend.position = "none")
+
+```
+```{r}
+ggplot(finalDF, aes(x ="", y = score_home, fill= team_home))+
+  geom_bar(stat="identity", width=1)+
+  coord_polar("y", start = 0)+
+  theme_void()+
+  labs(title= "                        Point Scored Home", subtitle ="                              by team", fill = "Team")
+
+```
+
+
+```{r}
+teams_home <- filter(finalDF, team_home == "Tampa Bay Buccaneers"| team_home == "Kansas City Chiefs")
+team_away <- filter(finalDF, team_away == "Kansas City Chiefs" | team_away == " Tampa Bay Buccaneers")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
